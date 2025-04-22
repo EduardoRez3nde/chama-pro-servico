@@ -1,17 +1,32 @@
 package com.project.chama_pro_servico.entities;
 
 import com.project.chama_pro_servico.entities.enums.TypeNumber;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
+@Table(name = "tb_phone")
 public class Phone {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(nullable = false)
     private String countryCode;
+
+    @Column(nullable = false)
     private String areaCode;
+
+    @Column(nullable = false)
     private String number;
+
+    @Enumerated(value = EnumType.STRING)
     private TypeNumber typeNumber;
+
+    @Column(nullable = false)
     private boolean isPrimary;
 
     public Phone() { }

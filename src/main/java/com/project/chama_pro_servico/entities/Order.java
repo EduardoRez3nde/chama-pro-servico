@@ -1,19 +1,37 @@
 package com.project.chama_pro_servico.entities;
 
 import com.project.chama_pro_servico.entities.enums.Status;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Entity
+@Table(name = "tb_order")
 public class Order {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE", nullable = false)
     private LocalDateTime solicitationDate;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE", nullable = false)
     private LocalDateTime scheduledDate;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Column(nullable = false)
     private String consideration;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "evaluation_id")
     private Evaluation evaluation;
+
+    @ManyToOne
+    @JoinColumn(name = "service_id")
     private Service service;
 
     public Order() { }

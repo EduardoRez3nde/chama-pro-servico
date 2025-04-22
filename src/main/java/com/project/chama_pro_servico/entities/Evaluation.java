@@ -1,13 +1,25 @@
 package com.project.chama_pro_servico.entities;
 
+import jakarta.persistence.*;
+
 import java.time.Instant;
 import java.util.UUID;
 
+@Entity
+@Table(name = "tb_evaluation")
 public class Evaluation {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(nullable = false)
     private int rating;
+
+    @Column(nullable = false)
     private String comment;
+
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE", nullable = false)
     private Instant evaluationDate;
 
     public Evaluation() { }

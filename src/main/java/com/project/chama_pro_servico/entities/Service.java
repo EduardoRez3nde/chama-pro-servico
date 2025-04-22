@@ -1,22 +1,45 @@
 package com.project.chama_pro_servico.entities;
 
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table(name = "tb_service")
 public class Service {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(nullable = false)
     private String title;
+
+    @Column(nullable = true)
     private String description;
+
+    @Column(nullable = false)
     private BigDecimal basePrice;
+
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE", nullable = false)
     private Instant creation;
+
+    @Column(nullable = false)
     private boolean active;
 
+    @ManyToOne
+    @JoinColumn(name = "provider_id")
     private Provider provider;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<Order> orders = new ArrayList<>();
 
     public Service() { }

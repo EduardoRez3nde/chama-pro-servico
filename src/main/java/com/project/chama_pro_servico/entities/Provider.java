@@ -1,6 +1,7 @@
 package com.project.chama_pro_servico.entities;
 
 import com.project.chama_pro_servico.entities.enums.UserType;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -8,13 +9,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table(name = "tb_provider")
 public class Provider extends User {
 
+    @Column(nullable = false)
     private String areaOfExpertise;
+
+    @Column(nullable = false)
     private String specialization;
+
+    @Column(nullable = true)
     private String description;
+
+    @Column(nullable = false)
     private BigDecimal valueHour;
 
+    @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<Service> services = new ArrayList<>();
 
     public Provider() { super(); }

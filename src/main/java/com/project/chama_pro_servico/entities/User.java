@@ -1,6 +1,7 @@
 package com.project.chama_pro_servico.entities;
 
 import com.project.chama_pro_servico.entities.enums.UserType;
+import jakarta.persistence.*;
 
 import java.time.Instant;
 import java.util.HashSet;
@@ -8,18 +9,43 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+@Entity
+@Table(name = "tb_user")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(nullable = false)
     private String firstName;
+
+    @Column(nullable = false)
     private String lastName;
+
+    @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE", nullable = false)
     private Instant registration;
+
+    @Enumerated(value = EnumType.STRING)
     private UserType userType;
 
+    @ManyToOne
+    @JoinColumn(name = "address_id")
     private Address address;
-    private Set<Notification> notification = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_id")
+    private final Set<Notification> notification = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "phone_id")
     private final Set<Phone> phones = new HashSet<>();
 
     public User() { }

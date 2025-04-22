@@ -1,17 +1,30 @@
 package com.project.chama_pro_servico.entities;
 
 import com.project.chama_pro_servico.entities.enums.NotificationType;
+import jakarta.persistence.*;
 
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
+@Table(name = "tb_notification")
 public class Notification {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(nullable = false)
     private String message;
+
+    @Enumerated(EnumType.STRING)
     private NotificationType notificationType;
+
+    @Column(nullable = false)
     private boolean isRead;
+
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE", nullable = false)
     private Instant sent;
 
     public Notification() { }

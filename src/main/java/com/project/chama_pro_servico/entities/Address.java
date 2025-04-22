@@ -1,15 +1,31 @@
 package com.project.chama_pro_servico.entities;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
+@Table(name = "tb_address")
 public class Address {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(nullable = false)
     private String street;
+
+    @Column(nullable = false)
     private String neighborhood;
+
+    @Column(nullable = false)
     private String city;
+
+    @Column(nullable = false)
     private String zipCode;
+
+    @Column(nullable = false)
     private String complement;
 
     public Address() { }
